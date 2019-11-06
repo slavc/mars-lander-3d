@@ -1,5 +1,6 @@
-const MARS_g = 3.7;
-const LANDER_SCALE = 1.0/150.0;
+const MARS_g = 3.7; // Acceleration due to gravity near Mars' surface
+const LANDER_SCALE = 1.0/150.0; // At this scale 1 unit is approx. equal to 1 meter
+const TIME_SCALE = 0.01;
 
 var clock = new THREE.Clock()
 var scene = new THREE.Scene();
@@ -10,7 +11,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.physicallyCorrectLights = true;
 document.body.appendChild(renderer.domElement);
 
-camera.position.y = 2;
+camera.position.y = -10;
 camera.position.z = 2;
 camera.lookAt(0, 0, 0);
 
@@ -25,7 +26,7 @@ var landerVector = new THREE.Vector3()
 function main_loop() {
 	t = clock.getDelta();
 
-	landerVector.y -= MARS_g * landerMass * 0.00001;
+	landerVector.y -= MARS_g * t * TIME_SCALE;
 	lander.position.y += landerVector.y;
 
 	camera.lookAt(lander.position.x, lander.position.y, lander.position.z);
